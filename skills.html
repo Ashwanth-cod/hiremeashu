@@ -89,12 +89,21 @@
         document.addEventListener("DOMContentLoaded", () => {
             // Data for progress bars
             const skills = [
-                { name: "Python (4 years)", width: "90%" },
+                { name: "Django (1 years)", width: "85%" }, 
+                { name: "Python (4 years)", width: "85%" },
                 { name: "JavaScript (3 years)", width: "80%" },
-                { name: "Flutter (2 years)", width: "75%" },
+                { name: "Flutter (1 year)", width: "60%" },
                 { name: "Git/GitHub", width: "70%" },
-                { name: "Unity (Game Development)", width: "60%" }
+                { name: "HTML/CSS", width: "95%" },
+                { name: "JS", width: "80%" },
+                { name: "Mysql", width: "80%" },
+                { name: "PHP", width: "65%" },
+                { name: "ReactJs with Nextjs", width: "80%" },
+                { name: "NextJs", width: "55%" },
             ];
+
+            // Sort skills by descending width
+            skills.sort((a, b) => parseInt(b.width) - parseInt(a.width));
 
             const progressContainer = document.getElementById("progress-container");
 
