@@ -6,133 +6,144 @@
     <title>Skills - My Resume</title>
     <!-- Link to Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
+            color: #333;
             margin-top: 40px;
         }
-        .section-card {
+
+        /* Header */
+        header {
+            text-align: center;
             margin-bottom: 2rem;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        header i {
+            color: #007bff;
+            margin-right: 10px;
+        }
+
+        /* Skill Card */
+        .section-card {
             background-color: #ffffff;
             border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
         .section-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
         }
-        .section-card h2 {
-            color: #343a40;
-            font-weight: 600;
-        }
+        
+        /* Progress Bar */
         .progress {
             height: 20px;
             margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
         }
         .progress-bar {
-            width: 0;
-            background-color: #0d6efd;
-            transition: width 1s ease;
+            transition: width 1.5s ease;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
         }
 
-        /* Timeline styles */
-        .timeline {
-            position: relative;
+        /* Tooltip styling */
+        .tooltip-inner {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .tooltip .arrow::before {
+            border-top-color: #007bff;
+        }
+
+        footer {
             margin-top: 2rem;
-            margin-left: 20px;
-            padding-left: 20px;
-        }
-        .timeline .timeline-item {
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 30px;
-            align-items: center;
-        }
-        .timeline .timeline-item:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-        .timeline .card {
-            width: 300px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <header class="text-center my-4">
-        <h1>Skills</h1>
+    <!-- Header -->
+    <header>
+        <h1><i class="fas fa-cogs"></i> Skills</h1>
+        <p>Here are the technical skills I've honed over the years.</p>
     </header>
-    
+
+    <!-- Skills Section -->
     <div class="container">
-        <section class="section-card">
-            <h2>Programming Languages & Tools</h2>
-
-            <!-- Progress bars -->
-            <div id="progress-container"></div>
-
-        </section>
+        <section class="section-card" id="skills-container"></section>
     </div>
 
-    <footer class="text-center mt-4">
+    <!-- Footer -->
+    <footer>
         <p>&copy; 2024 Ashwanth S. All Rights Reserved.</p>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Data for progress bars
+            // Skill data
             const skills = [
-                { name: "Django (1 years)", width: "85%" }, 
+                { name: "Django (1 year)", width: "85%" },
                 { name: "Python (4 years)", width: "85%" },
                 { name: "JavaScript (3 years)", width: "80%" },
                 { name: "Flutter (1 year)", width: "60%" },
                 { name: "Git/GitHub", width: "70%" },
                 { name: "HTML/CSS", width: "95%" },
-                { name: "JS", width: "80%" },
-                { name: "Mysql", width: "80%" },
+                { name: "MySQL", width: "80%" },
                 { name: "PHP", width: "65%" },
-                { name: "ReactJs with Nextjs", width: "80%" },
-                { name: "NextJs", width: "55%" },
+                { name: "React.js with Next.js", width: "80%" },
+                { name: "Next.js", width: "55%" }
             ];
 
-            // Sort skills by descending width
-            skills.sort((a, b) => parseInt(b.width) - parseInt(a.width));
+            const container = document.getElementById('skills-container');
 
-            const progressContainer = document.getElementById("progress-container");
-
+            // Generate progress bars dynamically
             skills.forEach(skill => {
-                const skillDiv = document.createElement("div");
-                skillDiv.className = "mb-3";
+                const progressDiv = document.createElement('div');
+                progressDiv.classList.add('mb-4');
 
-                const label = document.createElement("label");
-                label.textContent = skill.name;
+                const label = document.createElement('label');
+                label.classList.add('form-label', 'fw-bold');
+                label.innerText = skill.name;
 
-                const progress = document.createElement("div");
-                progress.className = "progress";
-
-                const progressBar = document.createElement("div");
-                progressBar.className = "progress-bar";
+                const progress = document.createElement('div');
+                progress.classList.add('progress');
+                
+                const progressBar = document.createElement('div');
+                progressBar.classList.add('progress-bar', 'bg-info');
                 progressBar.role = "progressbar";
-                progressBar.style.width = "0";
-                progressBar.style.transition = "width 2s ease";
+                progressBar.style.width = "0"; // Start animation from 0
+
+                progressBar.setAttribute('data-bs-toggle', 'tooltip');
+                progressBar.setAttribute('title', skill.width); // Tooltip text
                 
                 progress.appendChild(progressBar);
-                skillDiv.appendChild(label);
-                skillDiv.appendChild(progress);
-                progressContainer.appendChild(skillDiv);
+                progressDiv.appendChild(label);
+                progressDiv.appendChild(progress);
+                container.appendChild(progressDiv);
 
-                // Animate width on a slight delay
+                // Animate progress bars after delay
                 setTimeout(() => {
                     progressBar.style.width = skill.width;
-                }, 500);
+                }, 300);
             });
+
+            // Activate Bootstrap tooltips
+            const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            tooltips.forEach(tooltip => new bootstrap.Tooltip(tooltip));
         });
     </script>
 </body>
